@@ -8,9 +8,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-
-      debugShowCheckedModeBanner: true,
-      home: LoginScreen()
-    );
+        debugShowCheckedModeBanner: false, home: LoginScreen());
   }
 }
