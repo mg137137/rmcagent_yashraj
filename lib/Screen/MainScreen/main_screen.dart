@@ -27,9 +27,13 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   Map<String, dynamic> data = {};
+  List<dynamic> _booklistdetail = [];
 
   bool isLoggedIn = false;
-
+  String _response = '';
+  SharedPreferences? _prefs;
+  List<dynamic> _delardetail = [];
+  List<dynamic> _Totalbooknumber = [];
   @override
   void initState() {
     super.initState();
