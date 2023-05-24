@@ -10,8 +10,8 @@ import '../Documnets/documents.dart';
 import '../TTOBookLIst/ttobooklist.dart';
 import '../VehicalDetails/vehicaldetailes.dart';
 
-// bool check_api = false;
-// bool Logout = false;
+bool check_api = false;
+bool Logout = false;
 late final String name;
 String TotalBookNumber = '', Pendingbook = '', Appointment = '', Complete = '';
 late final String stoken;
@@ -30,10 +30,10 @@ class _MainScreenState extends State<MainScreen> {
   List<dynamic> _booklistdetail = [];
 
   bool isLoggedIn = false;
-  // String _response = '';
-  // SharedPreferences? _prefs;
-  // List<dynamic> _delardetail = [];
-  // List<dynamic> _Totalbooknumber = [];
+  String _response = '';
+  SharedPreferences? _prefs;
+  List<dynamic> _delardetail = [];
+  List<dynamic> _Totalbooknumber = [];
   @override
   void initState() {
     super.initState();

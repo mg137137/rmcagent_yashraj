@@ -6,14 +6,6 @@ import '../../Daimenstion/daimension.dart';
 import '../../Utils/bigtext.dart';
 import 'main_screen.dart';
 
-
-bool Logout = false;
-late final String name;
-String TotalBookNumber = '', Pendingbook = '', Appointment = '', Complete = '';
-late final String stoken;
-TextEditingController _vehiclesearch = TextEditingController();
-late String searchdata;
-
 class headerOfMainScreen extends StatefulWidget {
   const headerOfMainScreen({
     super.key,
