@@ -10,7 +10,7 @@ import '../Documnets/documents.dart';
 import '../TTOBookLIst/ttobooklist.dart';
 import '../VehicalDetails/vehicaldetailes.dart';
 
-bool check_api = false;
+bool check_api = true;
 bool Logout = false;
 late final String name;
 String TotalBookNumber = '', Pendingbook = '', Appointment = '', Complete = '';
@@ -27,13 +27,9 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   Map<String, dynamic> data = {};
-  List<dynamic> _booklistdetail = [];
 
   bool isLoggedIn = false;
-  String _response = '';
-  SharedPreferences? _prefs;
-  List<dynamic> _delardetail = [];
-  List<dynamic> _Totalbooknumber = [];
+
   @override
   void initState() {
     super.initState();
