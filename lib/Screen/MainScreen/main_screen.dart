@@ -30,10 +30,10 @@ class _MainScreenState extends State<MainScreen> {
   List<dynamic> _booklistdetail = [];
 
   bool isLoggedIn = false;
-  String _response = '';
-  SharedPreferences? _prefs;
-  List<dynamic> _delardetail = [];
-  List<dynamic> _Totalbooknumber = [];
+  // String _response = '';
+  // SharedPreferences? _prefs;
+  // List<dynamic> _delardetail = [];
+  // List<dynamic> _Totalbooknumber = [];
   @override
   void initState() {
     super.initState();
