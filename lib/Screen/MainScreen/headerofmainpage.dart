@@ -43,7 +43,7 @@ class _headerOfMainScreenState extends State<headerOfMainScreen> {
           height: Daimension.height100 +
               Daimension.height100 +
               Daimension.height100 +
-              Daimension.height80,
+              Daimension.height45,
         ),
         Positioned(
           top: 0,
@@ -53,14 +53,14 @@ class _headerOfMainScreenState extends State<headerOfMainScreen> {
             decoration: BoxDecoration(
                 color: Colors.blue,
                 borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(Daimension.height20),
-                    bottomLeft: Radius.circular(Daimension.height20))),
-            height: Daimension.Height250 + Daimension.height80,
+                    bottomRight: Radius.circular(Daimension.height45),
+                    bottomLeft: Radius.circular(Daimension.height45))),
+            height: Daimension.Height250 + Daimension.height45,
             child: Column(
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Daimension.height50,
+                      top: Daimension.height30,
                       left: Daimension.width20,
                       right: Daimension.width20),
                   child: Row(
@@ -117,7 +117,7 @@ class _headerOfMainScreenState extends State<headerOfMainScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Daimension.height30, left: Daimension.width20),
+                      top: Daimension.height5, left: Daimension.width20),
                   child: Row(
                     children: [
                       Icon(
