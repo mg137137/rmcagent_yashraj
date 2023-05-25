@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../api_configration/api_Configration.dart';
 
 late final String U_Name;
-late final String token;
+late String token;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool main = false;
+  static bool main = false;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -56,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: {'agentEmailId': username, 'agentPassword': password});
 
     if (response.statusCode == 200) {
+      main = true;
       var json = jsonDecode(response.body);
       token = json['token'];
       U_Name = (jsonDecode(response.body)['userName']).toString();
@@ -63,8 +64,13 @@ class _LoginScreenState extends State<LoginScreen> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
       await prefs.setString('userName', U_Name);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MainScreen()));
+      Get.snackbar(U_Name, 'Welcome !',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(milliseconds: 800));
       print(token);
-      main = true;
+
       print(U_Name);
 
       // Navigator.push(
@@ -260,17 +266,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (_isLoading != null) {
                                       _login();
                                       print(main);
-                                      if (main == true) {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MainScreen()));
-                                        Get.snackbar(U_Name, 'Welcome !',
-                                            snackPosition: SnackPosition.BOTTOM,
-                                            duration:
-                                                Duration(milliseconds: 800));
-                                      }
+                                    } else {
+                                      print('login page else part run');
                                     }
                                   },
                                   child: BigText(

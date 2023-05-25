@@ -88,7 +88,7 @@ class _headerOfMainScreenState extends State<headerOfMainScreen> {
 
                               print('logout sucessful');
                               Logout = true;
-                              if (Logout = true) {
+                              if (Logout == true) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -135,7 +135,7 @@ class _headerOfMainScreenState extends State<headerOfMainScreen> {
                               size: Daimension.height30,
                             ),
                             BigText(
-                              text: name,
+                              text: '$name',
                               color: Colors.white,
                               size: Daimension.height30,
                             )

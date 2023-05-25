@@ -1,18 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:rmcagent/Daimenstion/daimension.dart';
 import 'package:rmcagent/Screen/MainScreen/headerofmainpage.dart';
 import 'package:rmcagent/Utils/bigtext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Utils/reusecontainer.dart';
+import '../../api_configration/api_Configration.dart';
+import '../Boxes/all_book.dart';
 import '../Documnets/documents.dart';
-import '../TTOBookLIst/ttobooklist.dart';
+import '../Login/login.dart';
 import '../VehicalDetails/vehicaldetailes.dart';
 
 bool check_api = false;
-bool Logout = false;
-late final String name;
+bool Logout = true;
+String name = '';
 String TotalBookNumber = '', Pendingbook = '', Appointment = '', Complete = '';
 late final String stoken;
 TextEditingController _vehiclesearch = TextEditingController();
@@ -38,8 +43,8 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _checkLoggedIn();
-    // _fetchData();
-    // _fetchNumber();
+    _fetchData();
+    _fetchNumber();
   }
 
   @override
@@ -47,60 +52,85 @@ class _MainScreenState extends State<MainScreen> {
     _vehiclesearch.dispose();
     super.dispose();
   }
-  //
-  // Future<void> _fetchData() async {
-  //   _prefs = await SharedPreferences.getInstance();
-  //   final response = await http.get(
-  //     Uri.parse('$api_Dashboard_Dealer_List'),
-  //     headers: {'Authorization': 'Bearer $token'},
-  //   );
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       _response = response.body;
-  //
-  //       // _vehiclenumber =
-  //       //     (jsonDecode(response.body)['vehicleRegistrationNumber']);
-  //
-  //       _delardetail = json.decode(response.body);
-  //     });
-  //     _prefs?.setString('response', _response);
-  //   }
-  // }
-  //
-  // Future<void> _fetchNumber() async {
-  //   _prefs = await SharedPreferences.getInstance();
-  //   final response = await http.get(
-  //     Uri.parse('$api_Dashboard_Count_Number'),
-  //     headers: {'Authorization': 'Bearer $token'},
-  //   );
-  //   _response = response.body;
-  //
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       print(_response);
-  //       // print(_response.('AllBook'));
-  //       // data = (jsonDecode(response.body)[AllBook]);
-  //       TotalBookNumber = (jsonDecode(response.body)['AllBook']).toString();
-  //       Pendingbook = (jsonDecode(response.body)['AllPendingBook']).toString();
-  //       Appointment =
-  //           (jsonDecode(response.body)['AllAppointmentBook']).toString();
-  //       Complete = (jsonDecode(response.body)['AllCompleteBook']).toString();
-  //       print(TotalBookNumber);
-  //       // print(data);
-  //     });
-  //     _prefs?.setString('response', _response);
-  //   }
-  // }
+
+  Future<void> _fetchData() async {
+    _prefs = await SharedPreferences.getInstance();
+    final response = await http.get(
+      Uri.parse('$api_Dashboard_Dealer_List'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        _response = response.body;
+
+        // _vehiclenumber =
+        //     (jsonDecode(response.body)['vehicleRegistrationNumber']);
+
+        _delardetail = json.decode(response.body);
+      });
+      _prefs?.setString('response', _response);
+    }
+  }
+
+  Future<void> _fetchNumber() async {
+    _prefs = await SharedPreferences.getInstance();
+    final response = await http.get(
+      Uri.parse('$api_Dashboard_Count_Number'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    _response = response.body;
+
+    if (response.statusCode == 200) {
+      setState(() {
+        print(_response);
+        // print(_response.('AllBook'));
+        // data = (jsonDecode(response.body)[AllBook]);
+        // TotalBookNumber = (jsonDecode(response.body)['AllBook']).toString();
+        Pendingbook = (jsonDecode(response.body)['AllPendingBook']).toString();
+        Appointment =
+            (jsonDecode(response.body)['AllAppointmentBook']).toString();
+        Complete = (jsonDecode(response.body)['AllCompleteBook']).toString();
+        print(TotalBookNumber);
+        // print(data);
+      });
+      _prefs?.setString('response', _response);
+    }
+  }
 
   Future<void> _checkLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     String? U_Name = prefs.getString('userName');
+    if (token != null) {
+      _prefs = await SharedPreferences.getInstance();
+      final response = await http.get(
+        Uri.parse('$api_Dashboard_Count_Number'),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      _response = response.body;
+      if (response.statusCode == 200) {
+        setState(() {
+          name = U_Name.toString();
+          print(_response);
+          // print(_response.('AllBook'));
+          // data = (jsonDecode(response.body)[AllBook]);
+          TotalBookNumber = (jsonDecode(response.body)['AllBook']).toString();
+          Pendingbook =
+              (jsonDecode(response.body)['AllPendingBook']).toString();
+          Appointment =
+              (jsonDecode(response.body)['AllAppointmentBook']).toString();
+          Complete = (jsonDecode(response.body)['AllCompleteBook']).toString();
+          print(TotalBookNumber);
+          // print(data);
+        });
+        _prefs?.setString('response', _response);
+      }
+    }
 
     setState(() {
       check_api = true;
       isLoggedIn = token != null && U_Name != null;
-      name = U_Name.toString();
+
       stoken = token.toString();
     });
   }
@@ -137,7 +167,7 @@ class _MainScreenState extends State<MainScreen> {
                         size: Daimension.height20,
                       ),
                       BigText(
-                        text: '1000',
+                        text: '$TotalBookNumber',
                         size: Daimension.height20,
                       ),
                     ],
@@ -152,9 +182,9 @@ class _MainScreenState extends State<MainScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ReuseContainer(name1: 'Pandding', name: '100'),
-                    ReuseContainer(name1: 'Appointmnet', name: '100'),
-                    ReuseContainer(name1: 'Complete', name: '100'),
+                    ReuseContainer(name1: 'Pandding', name: '$Pendingbook'),
+                    ReuseContainer(name1: 'Appointmnet', name: '$Appointment'),
+                    ReuseContainer(name1: 'Complete', name: '$Complete'),
                   ],
                 ),
               ),
@@ -168,7 +198,7 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(TTOBookList());
+                        Get.to(all_book());
                         Get.snackbar("Your TTOBook ", "",
                             duration: const Duration(milliseconds: 800),
                             backgroundColor: Colors.transparent);
