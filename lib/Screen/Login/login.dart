@@ -41,7 +41,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (token != null && U_Name != null) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MainScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => MainScreen(
+                    token: '$token',
+                  )));
     }
   }
 
@@ -65,7 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('token', token);
       await prefs.setString('userName', U_Name);
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MainScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => MainScreen(
+                    token: '$token',
+                  )));
       Get.snackbar(U_Name, 'Welcome !',
           snackPosition: SnackPosition.BOTTOM,
           duration: Duration(milliseconds: 800));

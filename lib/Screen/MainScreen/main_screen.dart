@@ -10,10 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Utils/reusecontainer.dart';
 import '../../api_configration/api_Configration.dart';
+import '../Boxes/Categorie Wise Book.dart';
+import '../Boxes/Check_Book_Status.dart';
 import '../Boxes/all_book.dart';
-import '../Documnets/documents.dart';
 import '../Login/login.dart';
-import '../VehicalDetails/vehicaldetailes.dart';
 
 bool check_api = false;
 bool Logout = true;
@@ -24,7 +24,8 @@ TextEditingController _vehiclesearch = TextEditingController();
 late String searchdata;
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final String token;
+  const MainScreen({Key? key, required this.token}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -198,7 +199,9 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(all_book());
+                        Get.to(All_Book(
+                          token: '${widget.token}',
+                        ));
                         Get.snackbar("Your TTOBook ", "",
                             duration: const Duration(milliseconds: 800),
                             backgroundColor: Colors.transparent);
@@ -236,7 +239,10 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(VehicalDetailes());
+                        Get.to(Catogerywise_Book(
+                          token: '${widget.token}',
+                          dropdown_Value: 0,
+                        ));
                         Get.snackbar("Vehical detailes", "",
                             duration: Duration(milliseconds: 800));
                       },
@@ -275,7 +281,10 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(Documents());
+                        Get.to(Checkbook_Status(
+                          token: '${widget.token}',
+                          dopdown_name: 'Pending',
+                        ));
                         Get.snackbar("Documents", "",
                             duration: Duration(milliseconds: 800));
                       },
